@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BookStore_DotNetCore.Models;
+using BookStore_DotNetCore.Models.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -15,6 +17,9 @@ namespace BookStore_DotNetCore
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMvc();
+            services.AddSingleton<IBookStoreRepository<Author>,AuthorRepository>();
+            services.AddSingleton<IBookStoreRepository<Book>, BookRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
