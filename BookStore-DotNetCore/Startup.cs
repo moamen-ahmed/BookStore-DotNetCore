@@ -19,7 +19,7 @@ namespace BookStore_DotNetCore
         {
             services.AddMvc();
             services.AddSingleton<IBookStoreRepository<Author>,AuthorRepository>();
-            services.AddSingleton<IBookStoreRepository<Book>, BookRepository>();
+            services.AddSingleton<IBookStoreRepository<Book>, BooksRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -29,11 +29,8 @@ namespace BookStore_DotNetCore
             {
                 app.UseDeveloperExceptionPage();
             }
-
-            app.Run(async (context) =>
-            {
-                await context.Response.WriteAsync("Hello World!");
-            });
+            app.UseStaticFiles();
+            app.UseMvcWithDefaultRoute();      
         }
     }
 }

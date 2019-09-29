@@ -13,9 +13,9 @@ namespace BookStore_DotNetCore.Models.Repositories
             authors = new List<Author>()
             {
                 new Author{Id=1,FullName="Moamen Ahmed"},
-                new Author{Id=1,FullName="Mohamed Ahmed"},
-                new Author{Id=1,FullName="Mahmoud Ahmed"},
-                new Author{Id=1,FullName="Mostafa Ahmed"}
+                new Author{Id=2,FullName="Mohamed Ahmed"},
+                new Author{Id=3,FullName="Mahmoud Ahmed"},
+                new Author{Id=4,FullName="Mostafa Ahmed"}
             };
         }
 
