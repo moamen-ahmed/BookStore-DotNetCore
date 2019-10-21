@@ -12,9 +12,9 @@ namespace BookStore_DotNetCore.Models.Repositories
         {
             books = new List<Book>()
             {
-                new Book{Id=1,Title="c# Programming",Description="no Description"},
-                new Book{ Id=2,Title="Java Programming",Description="nothing"},
-                new Book{Id=3,Title="Python",Description="No Data"}
+                new Book{Id=1,Title="c# Programming",Description="no Description",Author=new Author {Id=2 } },
+                new Book{ Id=2,Title="Java Programming",Description="nothing",Author=new Author()},
+                new Book{Id=3,Title="Python",Description="No Data",Author=new Author()}
 
             };
         }

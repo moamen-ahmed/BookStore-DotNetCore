@@ -40,7 +40,7 @@ namespace BookStore_DotNetCore.Controllers
         {
             var model = new BookAuthorViewModel
             {
-                Authors=authorRepository.List().ToList()
+                Authors=FillSelectList()
             };
             return View(model);
         }
@@ -52,6 +52,14 @@ namespace BookStore_DotNetCore.Controllers
         {
             try
             {
+                if (model.AuthorId==-1)
+                {
+                    ViewBag.Message = "Please Select  an author from the list";
+
+                    var vmodel = new BookAuthorViewModel { Authors = FillSelectList() };
+
+                    return View(vmodel);
+                }
                 var author = authorRepository.Find(model.AuthorId);
                 Book book = new Book { Id=model.BookId,Title=model.Title,Description=model.Description,Author=author };
                 bookRepository.Add(book);
@@ -67,12 +75,14 @@ namespace BookStore_DotNetCore.Controllers
         public ActionResult Edit(int id)
         {
             var book = bookRepository.Find(id);
+            var authorId = book.Author == null ? book.Author.Id = 0 : book.Author.Id;
+
             var viewModel = new BookAuthorViewModel
             {
                 BookId = book.Id,
                 Title = book.Title,
                 Description=book.Description,
-                //AuthorId=book.Author.Id,
+                AuthorId= authorId,
                 Authors=authorRepository.List().ToList()
             
             };
@@ -82,11 +92,14 @@ namespace BookStore_DotNetCore.Controllers
         // POST: Book/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit( BookAuthorViewModel viewModel)
         {
             try
             {
                 // TODO: Add update logic here
+                var author = authorRepository.Find(viewModel.AuthorId);
+                Book book = new Book { Title = viewModel.Title, Description = viewModel.Description, Author = author };
+                bookRepository.Update(viewModel.BookId,book);
 
                 return RedirectToAction(nameof(Index));
             }
@@ -117,6 +130,13 @@ namespace BookStore_DotNetCore.Controllers
             {
                 return View();
             }
+        }
+
+        List<Author>FillSelectList()
+        {
+            var authors = authorRepository.List().ToList();
+            authors.Insert(0, new Author { Id = -1, FullName = "----Please Select an Author----" });
+            return authors;
         }
     }
 }
