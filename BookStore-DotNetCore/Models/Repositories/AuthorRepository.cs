@@ -41,6 +41,11 @@ namespace BookStore_DotNetCore.Models.Repositories
             return authors;
         }
 
+        public List<Author> Search(string term)
+        {
+            return authors.Where(a => a.FullName.Contains(term)).ToList();
+        }
+
         public void Update(int id, Author newAuthor)
         {
             var author = Find(id);
